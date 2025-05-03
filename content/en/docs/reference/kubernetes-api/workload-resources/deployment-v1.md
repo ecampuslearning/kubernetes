@@ -134,15 +134,15 @@ DeploymentStatus is the most recently observed status of the Deployment.
 
 - **replicas** (int32)
 
-  Total number of non-terminated pods targeted by this deployment (their labels match the selector).
+  Total number of non-terminating pods targeted by this deployment (their labels match the selector).
 
 - **availableReplicas** (int32)
 
-  Total number of available pods (ready for at least minReadySeconds) targeted by this deployment.
+  Total number of available non-terminating pods (ready for at least minReadySeconds) targeted by this deployment.
 
 - **readyReplicas** (int32)
 
-  readyReplicas is the number of pods targeted by this Deployment with a Ready Condition.
+  Total number of non-terminating pods targeted by this Deployment with a Ready Condition.
 
 - **unavailableReplicas** (int32)
 
@@ -150,7 +150,13 @@ DeploymentStatus is the most recently observed status of the Deployment.
 
 - **updatedReplicas** (int32)
 
-  Total number of non-terminated pods targeted by this deployment that have the desired template spec.
+  Total number of non-terminating pods targeted by this deployment that have the desired template spec.
+
+- **terminatingReplicas** (int32)
+
+  Total number of terminating pods targeted by this deployment. Terminating pods have a non-null .metadata.deletionTimestamp and have not yet reached the Failed or Succeeded .status.phase.
+  
+  This is an alpha field. Enable DeploymentReplicaSetTerminatingReplicas to be able to use this field.
 
 - **collisionCount** (int32)
 
@@ -254,14 +260,14 @@ GET /apis/apps/v1/namespaces/{namespace}/deployments/{name}
   name of the Deployment
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
-- ****: 
+- **pretty** (*in query*): string
 
-  
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
 
 
 
@@ -287,14 +293,14 @@ GET /apis/apps/v1/namespaces/{namespace}/deployments/{name}/status
   name of the Deployment
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
-- ****: 
+- **pretty** (*in query*): string
 
-  
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
 
 
 
@@ -315,64 +321,64 @@ GET /apis/apps/v1/namespaces/{namespace}/deployments
 #### Parameters
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
-- ****: 
+- **allowWatchBookmarks** (*in query*): boolean
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#allowWatchBookmarks" >}}">allowWatchBookmarks</a>
 
 
-- ****: 
+- **continue** (*in query*): string
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#continue" >}}">continue</a>
 
 
-- ****: 
+- **fieldSelector** (*in query*): string
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#fieldSelector" >}}">fieldSelector</a>
 
 
-- ****: 
+- **labelSelector** (*in query*): string
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#labelSelector" >}}">labelSelector</a>
 
 
-- ****: 
+- **limit** (*in query*): integer
 
-  
+  <a href="{{< ref "../common-parameters/common-parameters#limit" >}}">limit</a>
 
 
-- ****: 
+- **pretty** (*in query*): string
 
-  
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
+
+
+- **resourceVersion** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#resourceVersion" >}}">resourceVersion</a>
+
+
+- **resourceVersionMatch** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
+
+
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
+- **timeoutSeconds** (*in query*): integer
+
+  <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
+
+
+- **watch** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#watch" >}}">watch</a>
 
 
 
@@ -393,59 +399,59 @@ GET /apis/apps/v1/deployments
 #### Parameters
 
 
-- ****: 
+- **allowWatchBookmarks** (*in query*): boolean
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#allowWatchBookmarks" >}}">allowWatchBookmarks</a>
 
 
-- ****: 
+- **continue** (*in query*): string
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#continue" >}}">continue</a>
 
 
-- ****: 
+- **fieldSelector** (*in query*): string
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#fieldSelector" >}}">fieldSelector</a>
 
 
-- ****: 
+- **labelSelector** (*in query*): string
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#labelSelector" >}}">labelSelector</a>
 
 
-- ****: 
+- **limit** (*in query*): integer
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#limit" >}}">limit</a>
 
 
-- ****: 
+- **pretty** (*in query*): string
 
-  
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
+
+
+- **resourceVersion** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#resourceVersion" >}}">resourceVersion</a>
+
+
+- **resourceVersionMatch** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
+
+
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
+- **timeoutSeconds** (*in query*): integer
+
+  <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
+
+
+- **watch** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#watch" >}}">watch</a>
 
 
 
@@ -466,19 +472,9 @@ POST /apis/apps/v1/namespaces/{namespace}/deployments
 #### Parameters
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
 - **body**: <a href="{{< ref "../workload-resources/deployment-v1#Deployment" >}}">Deployment</a>, required
@@ -491,9 +487,19 @@ POST /apis/apps/v1/namespaces/{namespace}/deployments
   <a href="{{< ref "../common-parameters/common-parameters#dryRun" >}}">dryRun</a>
 
 
+- **fieldManager** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
 - **fieldValidation** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
+- **pretty** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
 
 
 
@@ -523,19 +529,9 @@ PUT /apis/apps/v1/namespaces/{namespace}/deployments/{name}
   name of the Deployment
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
 - **body**: <a href="{{< ref "../workload-resources/deployment-v1#Deployment" >}}">Deployment</a>, required
@@ -548,9 +544,19 @@ PUT /apis/apps/v1/namespaces/{namespace}/deployments/{name}
   <a href="{{< ref "../common-parameters/common-parameters#dryRun" >}}">dryRun</a>
 
 
+- **fieldManager** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
 - **fieldValidation** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
+- **pretty** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
 
 
 
@@ -578,19 +584,9 @@ PUT /apis/apps/v1/namespaces/{namespace}/deployments/{name}/status
   name of the Deployment
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
 - **body**: <a href="{{< ref "../workload-resources/deployment-v1#Deployment" >}}">Deployment</a>, required
@@ -603,9 +599,19 @@ PUT /apis/apps/v1/namespaces/{namespace}/deployments/{name}/status
   <a href="{{< ref "../common-parameters/common-parameters#dryRun" >}}">dryRun</a>
 
 
+- **fieldManager** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
 - **fieldValidation** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
+- **pretty** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
 
 
 
@@ -633,27 +639,12 @@ PATCH /apis/apps/v1/namespaces/{namespace}/deployments/{name}
   name of the Deployment
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
+- **body**: <a href="{{< ref "../common-definitions/patch#Patch" >}}">Patch</a>, required
 
   
 
@@ -663,9 +654,24 @@ PATCH /apis/apps/v1/namespaces/{namespace}/deployments/{name}
   <a href="{{< ref "../common-parameters/common-parameters#dryRun" >}}">dryRun</a>
 
 
+- **fieldManager** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
 - **fieldValidation** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
+- **force** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#force" >}}">force</a>
+
+
+- **pretty** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
 
 
 
@@ -693,27 +699,12 @@ PATCH /apis/apps/v1/namespaces/{namespace}/deployments/{name}/status
   name of the Deployment
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
+- **body**: <a href="{{< ref "../common-definitions/patch#Patch" >}}">Patch</a>, required
 
   
 
@@ -723,9 +714,24 @@ PATCH /apis/apps/v1/namespaces/{namespace}/deployments/{name}/status
   <a href="{{< ref "../common-parameters/common-parameters#dryRun" >}}">dryRun</a>
 
 
+- **fieldManager** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
 - **fieldValidation** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
+- **force** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#force" >}}">force</a>
+
+
+- **pretty** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
 
 
 
@@ -753,32 +759,12 @@ DELETE /apis/apps/v1/namespaces/{namespace}/deployments/{name}
   name of the Deployment
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
+- **body**: <a href="{{< ref "../common-definitions/delete-options#DeleteOptions" >}}">DeleteOptions</a>
 
   
 
@@ -786,6 +772,26 @@ DELETE /apis/apps/v1/namespaces/{namespace}/deployments/{name}
 - **dryRun** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#dryRun" >}}">dryRun</a>
+
+
+- **gracePeriodSeconds** (*in query*): integer
+
+  <a href="{{< ref "../common-parameters/common-parameters#gracePeriodSeconds" >}}">gracePeriodSeconds</a>
+
+
+- **ignoreStoreReadErrorWithClusterBreakingPotential** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#ignoreStoreReadErrorWithClusterBreakingPotential" >}}">ignoreStoreReadErrorWithClusterBreakingPotential</a>
+
+
+- **pretty** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
+
+
+- **propagationPolicy** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#propagationPolicy" >}}">propagationPolicy</a>
 
 
 
@@ -808,79 +814,79 @@ DELETE /apis/apps/v1/namespaces/{namespace}/deployments
 #### Parameters
 
 
-- ****: 
+- **namespace** (*in path*): string, required
+
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
+
+
+- **body**: <a href="{{< ref "../common-definitions/delete-options#DeleteOptions" >}}">DeleteOptions</a>
 
   
 
 
-- ****: 
+- **continue** (*in query*): string
 
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#continue" >}}">continue</a>
 
 
 - **dryRun** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#dryRun" >}}">dryRun</a>
+
+
+- **fieldSelector** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldSelector" >}}">fieldSelector</a>
+
+
+- **gracePeriodSeconds** (*in query*): integer
+
+  <a href="{{< ref "../common-parameters/common-parameters#gracePeriodSeconds" >}}">gracePeriodSeconds</a>
+
+
+- **ignoreStoreReadErrorWithClusterBreakingPotential** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#ignoreStoreReadErrorWithClusterBreakingPotential" >}}">ignoreStoreReadErrorWithClusterBreakingPotential</a>
+
+
+- **labelSelector** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#labelSelector" >}}">labelSelector</a>
+
+
+- **limit** (*in query*): integer
+
+  <a href="{{< ref "../common-parameters/common-parameters#limit" >}}">limit</a>
+
+
+- **pretty** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
+
+
+- **propagationPolicy** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#propagationPolicy" >}}">propagationPolicy</a>
+
+
+- **resourceVersion** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#resourceVersion" >}}">resourceVersion</a>
+
+
+- **resourceVersionMatch** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
+
+
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
+- **timeoutSeconds** (*in query*): integer
+
+  <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
 
 
 

@@ -30,17 +30,21 @@ guide. You can file document formatting bugs against the
 
 Endpoints is a collection of endpoints that implement the actual service. Example:
 
-	 Name: "mysvc",
-	 Subsets: [
-	   {
-	     Addresses: [{"ip": "10.10.1.1"}, {"ip": "10.10.2.2"}],
-	     Ports: [{"name": "a", "port": 8675}, {"name": "b", "port": 309}]
-	   },
-	   {
-	     Addresses: [{"ip": "10.10.3.3"}],
-	     Ports: [{"name": "a", "port": 93}, {"name": "b", "port": 76}]
-	   },
-	]
+   Name: "mysvc",
+   Subsets: [
+     {
+       Addresses: [{"ip": "10.10.1.1"}, {"ip": "10.10.2.2"}],
+       Ports: [{"name": "a", "port": 8675}, {"name": "b", "port": 309}]
+     },
+     {
+       Addresses: [{"ip": "10.10.3.3"}],
+       Ports: [{"name": "a", "port": 93}, {"name": "b", "port": 76}]
+     },
+  ]
+
+Endpoints is a legacy API and does not contain information about all Service features. Use discoveryv1.EndpointSlice for complete information about Service endpoints.
+
+Deprecated: This API is deprecated in v1.33+. Use discoveryv1.EndpointSlice.
 
 <hr>
 
@@ -71,7 +75,9 @@ Endpoints is a collection of endpoints that implement the actual service. Exampl
   The resulting set of endpoints can be viewed as:
   
   	a: [ 10.10.1.1:8675, 10.10.2.2:8675 ],
-  	b: [ 10.10.1.1:309, 10.10.2.2:309 ]*
+  	b: [ 10.10.1.1:309, 10.10.2.2:309 ]
+  
+  Deprecated: This API is deprecated in v1.33+.*
 
   - **subsets.addresses** ([]EndpointAddress)
 
@@ -80,7 +86,7 @@ Endpoints is a collection of endpoints that implement the actual service. Exampl
     IP addresses which offer the related ports that are marked as ready. These endpoints should be considered safe for load balancers and clients to utilize.
 
     <a name="EndpointAddress"></a>
-    *EndpointAddress is a tuple that describes single IP address.*
+    *EndpointAddress is a tuple that describes single IP address. Deprecated: This API is deprecated in v1.33+.*
 
     - **subsets.addresses.ip** (string), required
 
@@ -105,7 +111,7 @@ Endpoints is a collection of endpoints that implement the actual service. Exampl
     IP addresses which offer the related ports but are not currently marked as ready because they have not yet finished starting, have recently failed a readiness check, or have recently failed a liveness check.
 
     <a name="EndpointAddress"></a>
-    *EndpointAddress is a tuple that describes single IP address.*
+    *EndpointAddress is a tuple that describes single IP address. Deprecated: This API is deprecated in v1.33+.*
 
     - **subsets.notReadyAddresses.ip** (string), required
 
@@ -130,7 +136,7 @@ Endpoints is a collection of endpoints that implement the actual service. Exampl
     Port numbers available on the related IP addresses.
 
     <a name="EndpointPort"></a>
-    *EndpointPort is a tuple that describes a single port.*
+    *EndpointPort is a tuple that describes a single port. Deprecated: This API is deprecated in v1.33+.*
 
     - **subsets.ports.port** (int32), required
 
@@ -163,7 +169,7 @@ Endpoints is a collection of endpoints that implement the actual service. Exampl
 
 ## EndpointsList {#EndpointsList}
 
-EndpointsList is a list of endpoints.
+EndpointsList is a list of endpoints. Deprecated: This API is deprecated in v1.33+.
 
 <hr>
 
@@ -210,14 +216,14 @@ GET /api/v1/namespaces/{namespace}/endpoints/{name}
   name of the Endpoints
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
-- ****: 
+- **pretty** (*in query*): string
 
-  
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
 
 
 
@@ -238,64 +244,64 @@ GET /api/v1/namespaces/{namespace}/endpoints
 #### Parameters
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
-- ****: 
+- **allowWatchBookmarks** (*in query*): boolean
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#allowWatchBookmarks" >}}">allowWatchBookmarks</a>
 
 
-- ****: 
+- **continue** (*in query*): string
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#continue" >}}">continue</a>
 
 
-- ****: 
+- **fieldSelector** (*in query*): string
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#fieldSelector" >}}">fieldSelector</a>
 
 
-- ****: 
+- **labelSelector** (*in query*): string
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#labelSelector" >}}">labelSelector</a>
 
 
-- ****: 
+- **limit** (*in query*): integer
 
-  
+  <a href="{{< ref "../common-parameters/common-parameters#limit" >}}">limit</a>
 
 
-- ****: 
+- **pretty** (*in query*): string
 
-  
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
+
+
+- **resourceVersion** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#resourceVersion" >}}">resourceVersion</a>
+
+
+- **resourceVersionMatch** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
+
+
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
+- **timeoutSeconds** (*in query*): integer
+
+  <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
+
+
+- **watch** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#watch" >}}">watch</a>
 
 
 
@@ -316,59 +322,59 @@ GET /api/v1/endpoints
 #### Parameters
 
 
-- ****: 
+- **allowWatchBookmarks** (*in query*): boolean
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#allowWatchBookmarks" >}}">allowWatchBookmarks</a>
 
 
-- ****: 
+- **continue** (*in query*): string
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#continue" >}}">continue</a>
 
 
-- ****: 
+- **fieldSelector** (*in query*): string
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#fieldSelector" >}}">fieldSelector</a>
 
 
-- ****: 
+- **labelSelector** (*in query*): string
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#labelSelector" >}}">labelSelector</a>
 
 
-- ****: 
+- **limit** (*in query*): integer
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#limit" >}}">limit</a>
 
 
-- ****: 
+- **pretty** (*in query*): string
 
-  
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
+
+
+- **resourceVersion** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#resourceVersion" >}}">resourceVersion</a>
+
+
+- **resourceVersionMatch** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
+
+
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
+- **timeoutSeconds** (*in query*): integer
+
+  <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
+
+
+- **watch** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#watch" >}}">watch</a>
 
 
 
@@ -389,19 +395,9 @@ POST /api/v1/namespaces/{namespace}/endpoints
 #### Parameters
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
 - **body**: <a href="{{< ref "../service-resources/endpoints-v1#Endpoints" >}}">Endpoints</a>, required
@@ -414,9 +410,19 @@ POST /api/v1/namespaces/{namespace}/endpoints
   <a href="{{< ref "../common-parameters/common-parameters#dryRun" >}}">dryRun</a>
 
 
+- **fieldManager** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
 - **fieldValidation** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
+- **pretty** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
 
 
 
@@ -446,19 +452,9 @@ PUT /api/v1/namespaces/{namespace}/endpoints/{name}
   name of the Endpoints
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
 - **body**: <a href="{{< ref "../service-resources/endpoints-v1#Endpoints" >}}">Endpoints</a>, required
@@ -471,9 +467,19 @@ PUT /api/v1/namespaces/{namespace}/endpoints/{name}
   <a href="{{< ref "../common-parameters/common-parameters#dryRun" >}}">dryRun</a>
 
 
+- **fieldManager** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
 - **fieldValidation** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
+- **pretty** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
 
 
 
@@ -501,27 +507,12 @@ PATCH /api/v1/namespaces/{namespace}/endpoints/{name}
   name of the Endpoints
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
+- **body**: <a href="{{< ref "../common-definitions/patch#Patch" >}}">Patch</a>, required
 
   
 
@@ -531,9 +522,24 @@ PATCH /api/v1/namespaces/{namespace}/endpoints/{name}
   <a href="{{< ref "../common-parameters/common-parameters#dryRun" >}}">dryRun</a>
 
 
+- **fieldManager** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
 - **fieldValidation** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
+- **force** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#force" >}}">force</a>
+
+
+- **pretty** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
 
 
 
@@ -561,32 +567,12 @@ DELETE /api/v1/namespaces/{namespace}/endpoints/{name}
   name of the Endpoints
 
 
-- ****: 
+- **namespace** (*in path*): string, required
 
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
 
 
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
+- **body**: <a href="{{< ref "../common-definitions/delete-options#DeleteOptions" >}}">DeleteOptions</a>
 
   
 
@@ -594,6 +580,26 @@ DELETE /api/v1/namespaces/{namespace}/endpoints/{name}
 - **dryRun** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#dryRun" >}}">dryRun</a>
+
+
+- **gracePeriodSeconds** (*in query*): integer
+
+  <a href="{{< ref "../common-parameters/common-parameters#gracePeriodSeconds" >}}">gracePeriodSeconds</a>
+
+
+- **ignoreStoreReadErrorWithClusterBreakingPotential** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#ignoreStoreReadErrorWithClusterBreakingPotential" >}}">ignoreStoreReadErrorWithClusterBreakingPotential</a>
+
+
+- **pretty** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
+
+
+- **propagationPolicy** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#propagationPolicy" >}}">propagationPolicy</a>
 
 
 
@@ -616,79 +622,79 @@ DELETE /api/v1/namespaces/{namespace}/endpoints
 #### Parameters
 
 
-- ****: 
+- **namespace** (*in path*): string, required
+
+  <a href="{{< ref "../common-parameters/common-parameters#namespace" >}}">namespace</a>
+
+
+- **body**: <a href="{{< ref "../common-definitions/delete-options#DeleteOptions" >}}">DeleteOptions</a>
 
   
 
 
-- ****: 
+- **continue** (*in query*): string
 
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
-
-
-- ****: 
-
-  
+  <a href="{{< ref "../common-parameters/common-parameters#continue" >}}">continue</a>
 
 
 - **dryRun** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#dryRun" >}}">dryRun</a>
+
+
+- **fieldSelector** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldSelector" >}}">fieldSelector</a>
+
+
+- **gracePeriodSeconds** (*in query*): integer
+
+  <a href="{{< ref "../common-parameters/common-parameters#gracePeriodSeconds" >}}">gracePeriodSeconds</a>
+
+
+- **ignoreStoreReadErrorWithClusterBreakingPotential** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#ignoreStoreReadErrorWithClusterBreakingPotential" >}}">ignoreStoreReadErrorWithClusterBreakingPotential</a>
+
+
+- **labelSelector** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#labelSelector" >}}">labelSelector</a>
+
+
+- **limit** (*in query*): integer
+
+  <a href="{{< ref "../common-parameters/common-parameters#limit" >}}">limit</a>
+
+
+- **pretty** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
+
+
+- **propagationPolicy** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#propagationPolicy" >}}">propagationPolicy</a>
+
+
+- **resourceVersion** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#resourceVersion" >}}">resourceVersion</a>
+
+
+- **resourceVersionMatch** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
+
+
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
+- **timeoutSeconds** (*in query*): integer
+
+  <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
 
 
 
